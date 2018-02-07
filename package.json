@@ -1,10 +1,11 @@
 {
   "name": "gldate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "awsome date",
   "main": "dist/glDate.js",
   "directories": {
-    "lib": "lib"
+    "lib": "lib",
+    "test": "test"
   },
   "scripts": {
     "build": "node scripts/build.js"
@@ -25,5 +26,13 @@
     "rimraf": "^2.6.2",
     "webpack": "^3.10.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lgl1993/gldate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lgl1993/gldate/issues"
+  },
+  "homepage": "https://github.com/lgl1993/gldate#readme"
 }

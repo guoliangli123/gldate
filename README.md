@@ -1,6 +1,6 @@
 # GlDate类
 
-对继承自date,并扩展了常用方法，以及属性。
+instanceof Date,并扩展常用方法,属性。
 
 ## Property
 
@@ -11,7 +11,7 @@
 - `hours` get or set
 - `minutes` get or set
 - `seconds` get or set
-- `timeStamp` get
+- `timeStamp` get or set
 
 ## Method
 
@@ -20,5 +20,8 @@
 - `get12Ts`
 - `get12MilliSecondTs`
 - `getDateByDayDistance`
-
+- `add`
+- `isBefore`
+- `isAfter`
+- `getByOffset` Static
 
