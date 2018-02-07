@@ -1,2 +1,4 @@
 test/
 scripts/
+doc/
+.jsdocConf.json
