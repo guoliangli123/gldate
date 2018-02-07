@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: date.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: date.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class glDate {
+  /**
+   * create a Date Object
+   * 可以使用原生Date的生成方式,或者 new Date('2017.01.12','yyyy.MM.dd')
+   * @param  arg 
+   */
+  constructor(...arg) {
+    let dateIns
+    dateIns = new Date(...arg)
+    //原生创建失败，采用glDate的形式
+    if (dateIns.valueOf() != dateIns.valueOf()) {
+      let dateStr = arg[0].replace(/(\D)*/g, ''),
+        fmt = arg[1].replace(/([^yMdhms])*/g, ''),
+        fmtarr = fmt.split('')
+      dateIns = new Date(...['y', 'M', 'd', 'm', 's'].map(k => ~~dateStr.substring(fmtarr.indexOf(k), fmtarr.lastIndexOf(k) + 1)))
+    }
+    Object.setPrototypeOf(dateIns, glDate.prototype)
+    Object.setPrototypeOf(glDate.prototype, Date.prototype)
+    return dateIns
+  }
+
+  /**
+   * get or set year
+   */
+  get year() {
+    return this.getFullYear()
+  }
+
+  set year(val) {
+    this.setFullYear(val)
+  }
+
+  /**
+   * get or set Month
+   */
+  get month() {
+    return this.getMonth()
+  }
+  set month(val) {
+    this.setMonth(val)
+  }
+
+  /**
+   * get week
+   */
+  get week() {
+    let firstDay = new Date(this.year, 0, 1),
+      daydiff = Math.round((this.valueOf() - firstDay.valueOf()) / 8.64e7)
+    return Math.ceil((daydiff + firstDay.getDay()) / 7)
+  }
+
+  /**
+   * get or set date
+   */
+  get date() {
+    return this.getDate()
+  }
+
+  set date(val) {
+    this.setDate(val)
+  }
+
+  /**
+   * get day
+   */
+  get day() {
+    return this.getDay()
+  }
+
+  /**
+   * get or set hours
+   */
+  get hours() {
+    return this.getHours()
+  }
+  set hours(val) {
+    this.setHours(val)
+  }
+
+  /**
+   * get or set minutes
+   */
+  get minutes() {
+    return this.getMinutes()
+  }
+  set minutes(val) {
+    this.setMinutes(val)
+  }
+
+  /**
+   * get or set seconds
+   */
+  get seconds() {
+    return this.getSeconds()
+  }
+  set seconds(val) {
+    this.setSeconds(val)
+  }
+
+  /**
+   * get or set milliseconds
+   */
+  get milliseconds() {
+    return this.getMilliseconds()
+  }
+  set milliseconds(val) {
+    this.setMilliseconds(val)
+  }
+
+  /**
+   * get or set timeStamp
+   */
+  get timeStamp() {
+    return this.valueOf()
+  }
+  set timeStamp(val) {
+    let newDate
+    try {
+      newDate = new Date(val)
+      this.setFullYear(newDate.year, newDate.month, newDate.date)
+      this.setHours(newDate.hours, newDate.minutes, newDate.seconds, newDate.milliseconds)
+    } catch (e) {
+      throw new Error('timeStamp out of range')
+    }
+  }
+
+  _padLeftZero(str) {
+    return ('00' + str).substr(str.length)
+  }
+
+  /**
+   * format Date
+   * @param {String} fmt  eg:'yy-MM-dd'
+   * y for year 
+   * M from month 
+   * d for date
+   * h for hour
+   * m for minute
+   * s for second
+   * @return {String} formated String
+   */
+  format(fmt) {
+    if (/(y+)/.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (this.year + '').substr(4 - RegExp.$1.length))
+    }
+    let o = {
+      'M+': this.month + 1,
+      'd+': this.date,
+      'h+': this.hours,
+      'm+': this.minutes,
+      's+': this.seconds,
+    }
+    for (let k in o) {
+      if (new RegExp(`(${k})`).test(fmt)) {
+        let str = o[k] + ''
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : this._padLeftZero(str))
+      }
+    }
+    return fmt
+  }
+
+  /**
+   * 返回从12点开始的秒级时间戳
+   * @return {number} timeStamp
+   */
+  get12Ts() {
+    return Math.round(this.clone().setStart(12, 'h').timeStamp / 1000);
+  }
+
+  /**
+   * 修改当前时间,可以链式调用
+   * @param {Number} num 可以为正数或者负数，负数表示减
+   * @param {*} unit 单位
+   * year y for year
+   * month M for month
+   * day d for day
+   * hour h for hour
+   * minute m for minute
+   * second s for second
+   * millisecond ms fro millisecond
+   * @returns void 0
+   */
+  add(num, unit) {
+    switch (unit) {
+      case 'year':
+      case 'y':
+        this.setFullYear(this.year + num)
+        break
+      case 'month':
+      case 'M':
+        this.setMonth(this.month + num)
+        break
+      case 'day':
+      case 'd':
+        this.setDate(this.date + num)
+        break
+      case 'hour':
+      case 'h':
+        this.setHours(this.hours + num)
+        break
+      case 'minute':
+      case 'm':
+        this.setMinutes(this.minutes + num);
+        break
+      case 'second':
+      case 's':
+        this.setSeconds(this.seconds + number)
+        break
+      case 'millisecond':
+      case 'ms':
+        this.setMilliseconds(this.milliseconds + number)
+        break
+      default:
+        break
+    }
+    return this
+  }
+
+  /**
+   * 是否在某一时间之前
+   * @param {Number|Date|String} compare
+   * @return {Boolean}
+   */
+  isBefore(compare) {
+    return this.timeStamp &lt; new glDate(compare).timeStamp
+  }
+
+  /**
+   * 是否在某一时间之后
+   * @param {Number|Date|String} compare 
+   * @return {Boolean}
+   */
+  isAfter(compare) {
+    return this.timeStamp > new glDate(compare).timeStamp
+  }
+
+  /**
+   * 拷贝当前时间
+   * @return { glDate }
+   * @return {glDate}
+   */
+  clone() {
+    return new glDate(this.valueOf())
+  }
+
+  /**
+   * 将当前时间置于某一开始时刻
+   * @param {Number} num 设置开始的时间
+   * @param {String} unit 设定单位
+   * year y for year
+   * month M for month
+   * day d for day
+   * hour h for hour
+   * minute m for minute
+   * second s for second
+   * millisecond ms fro millisecond
+   * @return viod 0
+   */
+  setStart(num, unit) {
+    switch (unit) {
+      case 'year':
+      case 'y':
+        this.setFullYear(num, 0, 1)
+        this.setHours(0, 0, 0, 0)
+        break
+      case 'month':
+      case 'M':
+        this.setFullYear(this.year, num, 1)
+        this.setHours(0, 0, 0, 0)
+        break
+      case 'day':
+      case 'd':
+        this.setFullYear(this.year, this.month, num);
+        this.setHours(0, 0, 0, 0);
+        break
+      case 'hour':
+      case 'h':
+        this.setHours(num, 0, 0, 0);
+        break
+      case 'minute':
+      case 'm':
+        this.setMinutes(num, 0, 0);
+        break
+      case 'second':
+      case 's':
+        this.setSeconds(num, 0)
+        break
+      case 'millisecond':
+      case 'ms':
+        this.setMilliseconds(num)
+        break
+      default:
+        break
+    }
+    return this
+  }
+
+  /**
+   * 返回距当前某一时间段的时间,unit单位同add
+   * eg:glDate.getByOffset(1,'day');
+   * @param {Number} num 
+   * @param {String} unit 单位
+   * @return {glDate}
+   */
+  static getByOffset(num, unit) {
+    let now = new glDate()
+    now.add(num, unit)
+    return now
+  }
+
+  /**
+   * 返回最大的一个时间
+   * @param {Date|glDate} arg
+   * @returns { glDate }
+   */
+  static max(...arg) {
+    return new glDate(Math.max(...arg.map(date => date.valueOf())))
+  }
+
+  /**
+   * 返回最小的一个时间
+   * @param {Date|glDate} arg
+   * @returns { glDate }
+   */
+  static min(...arg) {
+    return new glDate(Math.min(...arg.map(date => date.valueOf())))
+  }
+
+  /**
+   * 返回在一个开始和结束时间段中,按step分隔的时间数组
+   * 如果提供format则返回字符串，否则返回glGate
+   * @param { Date|glDate } fromDate
+   * @param { Date|glDate } toDate 
+   * @param { Number } step second为单位
+   * @param { String } format
+   * @return {Array&lt;glGate|String>}
+   */
+  static duration(fromDate, toDate, step, format) {
+    if (!step) return;
+    let length = (Math.floor(toDate.valueOf() - fromDate.valueOf()) / 1000) / step + 1
+    let ts0 = fromDate.valueOf()
+    return Array.apply(null, { length }).map((_, index) => {
+      return format ? new glDate(ts0 + step * 1000 * index).format(format) : new glDate(ts0 + step * 1000);
+    })
+  }
+}
+
+module.exports = glDate
+
+module.exports.default = glDate</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="glDate.html">glDate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Feb 07 2018 19:18:16 GMT+0800 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
