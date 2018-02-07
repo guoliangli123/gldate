@@ -1,6 +1,6 @@
 {
   "name": "gldate",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "awsome date",
   "main": "dist/glDate.js",
   "directories": {
@@ -8,7 +8,8 @@
     "test": "test"
   },
   "scripts": {
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "doc":"jsdoc -c jsdocConf.json -d ./doc --debug -R README.md"
   },
   "keywords": [
     "dateClass"

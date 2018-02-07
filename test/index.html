@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script src="../dist/glDate.js"></script>
+  <script src="../lib/date.js"></script>
 </head>
 <body>
   <script>
@@ -20,9 +20,11 @@
     console.log(glDate.min(glDate.getByOffset(-30,'d'),glDate.getByOffset(-2,'d'),glDate.getByOffset(3,'d')));
     
     a = new glDate();
-    a.setStart(1,'day');
+    console.log(a.format('yyyy年MM月dd日'));
+    console.dir(a);
     
-    console.log(a);
+    b = new glDate('2018年2月12日','yyyy-M-dd');
+    console.dir(b);
   </script>
 </body>
 </html>
