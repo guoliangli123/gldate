@@ -13,6 +13,8 @@ npm install gldate
  import glDate from gldate
  
 ```
+### doc
+[document](https://lgl1993.github.io/gldate/)
 
 ## Property
 
@@ -35,10 +37,10 @@ npm install gldate
 - `isAfter`
 - `clone` 
 - `setStart` 会改变原时间
-- `duration` 获取一段时间的Date array
 
 ### static
 - `getByOffset` 参数同add
 - `max`
 - `min`
+- `duration` 获取一段时间的Date array
 
