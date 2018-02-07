@@ -5,12 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script src="../lib/date.js"></script>
+  <script src="../dist/glDate.js"></script>
 </head>
 <body>
   <script>
-    var test = new glDate();
-    console.dir(test);
+    console.log(
+      glDate.duration(
+        glDate.getByOffset(-30,'d'),
+        glDate.getByOffset(-1,'d'),
+        3600*24,
+        'yy-MM-dd')
+      );
+    
+    console.log(glDate.min(glDate.getByOffset(-30,'d'),glDate.getByOffset(-2,'d'),glDate.getByOffset(3,'d')));
+    
+    a = new glDate();
+    a.setStart(1,'day');
+    
+    console.log(a);
   </script>
 </body>
 </html>
