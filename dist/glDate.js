@@ -95,14 +95,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var glDate = function () {
+var dateLib = function () {
   /**
    * create a Date Object
    * 可以使用原生Date的生成方式,或者 new Date('2017.01.12','yyyy.MM.dd')
    * @param  arg 
    */
-  function glDate() {
-    _classCallCheck(this, glDate);
+  function dateLib() {
+    _classCallCheck(this, dateLib);
 
     var dateIns = void 0;
 
@@ -111,7 +111,7 @@ var glDate = function () {
     }
 
     dateIns = new (Function.prototype.bind.apply(Date, [null].concat(arg)))();
-    //原生创建失败，采用glDate的形式
+    //原生创建失败，采用dateLib的形式
     if (dateIns.valueOf() != dateIns.valueOf()) {
       var dateStr = arg[0].replace(/(\D)*/g, ''),
           fmt = arg[1].replace(/([^yMdhms])*/g, ''),
@@ -120,8 +120,8 @@ var glDate = function () {
         return ~~dateStr.substring(fmtarr.indexOf(k), fmtarr.lastIndexOf(k) + 1);
       })))))();
     }
-    Object.setPrototypeOf(dateIns, glDate.prototype);
-    Object.setPrototypeOf(glDate.prototype, Date.prototype);
+    Object.setPrototypeOf(dateIns, dateLib.prototype);
+    Object.setPrototypeOf(dateLib.prototype, Date.prototype);
     return dateIns;
   }
 
@@ -130,7 +130,7 @@ var glDate = function () {
    */
 
 
-  _createClass(glDate, [{
+  _createClass(dateLib, [{
     key: '_padLeftZero',
     value: function _padLeftZero(str) {
       return ('00' + str).substr(str.length);
@@ -242,7 +242,7 @@ var glDate = function () {
   }, {
     key: 'isBefore',
     value: function isBefore(compare) {
-      return this.timeStamp < new glDate(compare).timeStamp;
+      return this.timeStamp < new dateLib(compare).timeStamp;
     }
 
     /**
@@ -254,19 +254,19 @@ var glDate = function () {
   }, {
     key: 'isAfter',
     value: function isAfter(compare) {
-      return this.timeStamp > new glDate(compare).timeStamp;
+      return this.timeStamp > new dateLib(compare).timeStamp;
     }
 
     /**
      * 拷贝当前时间
-     * @return { glDate }
-     * @return {glDate}
+     * @return { dateLib }
+     * @return {dateLib}
      */
 
   }, {
     key: 'clone',
     value: function clone() {
-      return new glDate(this.valueOf());
+      return new dateLib(this.valueOf());
     }
 
     /**
@@ -326,10 +326,10 @@ var glDate = function () {
 
     /**
      * 返回距当前某一时间段的时间,unit单位同add
-     * eg:glDate.getByOffset(1,'day');
+     * eg:dateLib.getByOffset(1,'day');
      * @param {Number} num 
      * @param {String} unit 单位
-     * @return {glDate}
+     * @return {dateLib}
      */
 
   }, {
@@ -463,15 +463,15 @@ var glDate = function () {
   }], [{
     key: 'getByOffset',
     value: function getByOffset(num, unit) {
-      var now = new glDate();
+      var now = new dateLib();
       now.add(num, unit);
       return now;
     }
 
     /**
      * 返回最大的一个时间
-     * @param {Date|glDate} arg
-     * @returns { glDate }
+     * @param {Date|dateLib} arg
+     * @returns { dateLib }
      */
 
   }, {
@@ -481,15 +481,15 @@ var glDate = function () {
         arg[_key2] = arguments[_key2];
       }
 
-      return new glDate(Math.max.apply(Math, _toConsumableArray(arg.map(function (date) {
+      return new dateLib(Math.max.apply(Math, _toConsumableArray(arg.map(function (date) {
         return date.valueOf();
       }))));
     }
 
     /**
      * 返回最小的一个时间
-     * @param {Date|glDate} arg
-     * @returns { glDate }
+     * @param {Date|dateLib} arg
+     * @returns { dateLib }
      */
 
   }, {
@@ -499,7 +499,7 @@ var glDate = function () {
         arg[_key3] = arguments[_key3];
       }
 
-      return new glDate(Math.min.apply(Math, _toConsumableArray(arg.map(function (date) {
+      return new dateLib(Math.min.apply(Math, _toConsumableArray(arg.map(function (date) {
         return date.valueOf();
       }))));
     }
@@ -507,8 +507,8 @@ var glDate = function () {
     /**
      * 返回在一个开始和结束时间段中,按step分隔的时间数组
      * 如果提供format则返回字符串，否则返回glGate
-     * @param { Date|glDate } fromDate
-     * @param { Date|glDate } toDate 
+     * @param { Date|dateLib } fromDate
+     * @param { Date|dateLib } toDate 
      * @param { Number } step second为单位
      * @param { String } format
      * @return {Array<glGate|String>}
@@ -521,17 +521,17 @@ var glDate = function () {
       var length = Math.floor(toDate.valueOf() - fromDate.valueOf()) / 1000 / step + 1;
       var ts0 = fromDate.valueOf();
       return Array.apply(null, { length: length }).map(function (_, index) {
-        return format ? new glDate(ts0 + step * 1000 * index).format(format) : new glDate(ts0 + step * 1000);
+        return format ? new dateLib(ts0 + step * 1000 * index).format(format) : new dateLib(ts0 + step * 1000);
       });
     }
   }]);
 
-  return glDate;
+  return dateLib;
 }();
 
-module.exports = glDate;
+module.exports = dateLib;
 
-module.exports.default = glDate;
+module.exports.default = dateLib;
 
 /***/ })
 /******/ ]);

@@ -1,17 +1,17 @@
-# GlDate类
+# dateLib is a class extends Date
 
-instanceof Date,并扩展常用方法,属性。
+instanceof Date,and extend properties and methods,you can use as Date;
 
 ## Installing
 
-npm install gldate
+npm install date-library
 
 ### Using
 
 ```js
- const glDate = require('gldate')
- import glDate from gldate
- 
+ const dateLib = require('date-library')
+ import dateLib from 'date-library'
+
 ```
 ### doc
 [document](https://lgl1993.github.io/gldate/)
@@ -43,4 +43,3 @@ npm install gldate
 - `max`
 - `min`
 - `duration` 获取一段时间的Date array
-

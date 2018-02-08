@@ -1,6 +1,6 @@
 {
-  "name": "gldate",
-  "version": "1.0.7",
+  "name": "date-library",
+  "version": "1.0.9",
   "description": "awsome date",
   "main": "dist/glDate.js",
   "directories": {
@@ -13,7 +13,10 @@
     "doc": "jsdoc -c jsdocConf.json -d ./doc --debug -R README.md"
   },
   "keywords": [
-    "dateClass"
+    "date",
+    "dateClass",
+    "date library",
+    "date util"
   ],
   "author": "lgl1993",
   "license": "ISC",
