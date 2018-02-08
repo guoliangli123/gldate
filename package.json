@@ -1,6 +1,6 @@
 {
   "name": "date-library",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "awsome date",
   "main": "dist/glDate.js",
   "directories": {

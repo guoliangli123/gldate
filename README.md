@@ -9,7 +9,7 @@ npm install date-library
 ### Using
 
 ```js
- const dateLib = require('date-library')
+ const dateLib = require('date-library ')
  import dateLib from 'date-library'
 
 ```
